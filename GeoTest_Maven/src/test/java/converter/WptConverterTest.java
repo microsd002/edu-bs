@@ -23,8 +23,13 @@ public class WptConverterTest {
         testPoint = new PointImpl(1L,49.045860,23.454690,"HREBET","descr");
 
         Assert.assertEquals("Error!", testPoint, points.get(0));
+    }
 
-
+    @Test
+    public void testWrong() {
+        points = new Converter().convertFromFile("src/main/resources/converter/sample.wpt");
+        testPoint = new PointImpl(-1234L, 49.045860, 23.454690, "Aaaaaa", "Bbbbb");
+        Assert.assertFalse("Error!", testPoint.equals(points.get(0)));
     }
 
 }
