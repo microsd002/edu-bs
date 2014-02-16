@@ -1,8 +1,7 @@
 package utils;
 
 import converter.Converter;
-import converter.PointImpl;
-import utils.PointsDAO;
+
 import converter.Point;
 import org.junit.Assert;
 import org.junit.Test;
