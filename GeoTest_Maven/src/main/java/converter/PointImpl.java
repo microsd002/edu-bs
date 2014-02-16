@@ -54,7 +54,7 @@ public class PointImpl implements Point {
     }
 
     public String toString(){
-        return "Point "+id+" Name: "+name+" Lat: "+latitude+" Lon: "+longitude;
+        return "Point "+id+" Name: "+name+" Lat: "+latitude+" Lon: "+longitude+" Descr: "+description;
 
     }
     @Override
@@ -64,7 +64,14 @@ public class PointImpl implements Point {
 
         Point other = (Point) obj;
 
-        return (longitude.equals(other.getLongitude())) && (latitude.equals(other.getLatitude()));
+
+        boolean isIdEquals= id.equals(other.getId());
+        boolean isLongEquals= longitude.equals(other.getLongitude());
+        boolean isLatEquals= latitude.equals(other.getLatitude());
+        boolean isNameEquals= name.equals(other.getName());
+        boolean isDescrEquals= description.equals(other.getDescription());
+
+        return isIdEquals && isLongEquals && isLatEquals && isNameEquals && isDescrEquals;
     }
     @Override
     public int hashCode() {
