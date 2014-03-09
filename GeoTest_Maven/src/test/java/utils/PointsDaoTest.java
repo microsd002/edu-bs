@@ -3,7 +3,9 @@ package utils;
 import converter.Converter;
 
 import converter.Point;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -16,75 +18,73 @@ public class PointsDaoTest {
     PointsDAO dao;
     List<Point> points;
 
-    public PointsDaoTest(){
+    public PointsDaoTest() throws SQLException {
 
         points = new Converter().convertFromFile("src/main/resources/converter/sample.wpt");
-        try {
+
              dao = new PointsDAO();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
+    }
+
+    @Before
+    public void Init() throws SQLException {
+        dao.addPoint(points.get(0));
+        dao.addPoint(points.get(1));
+
+    }
+
+    @After
+    public void Finish() throws SQLException {
+        dao.deletePoint(points.get(0));
+        dao.deletePoint(points.get(1));
+
     }
 
     @Test
-    public void testGetPoints(){
+    public void testGetPoints() throws SQLException {
 
-        try {
+
             Assert.assertNotNull(dao.getPoints());
             Assert.assertTrue(dao.getPoints().size() > 0);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
     }
     @Test
-    public void testGetPoint(){
-        try {
+    public void testGetPoint()throws SQLException {
+
             Assert.assertNotNull(dao.getPoint(1L));
             Assert.assertEquals(dao.getPoint(1L),points.get(0));
             Assert.assertNull(dao.getPoint(100L));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
 
     @Test
-    public void testUpdatePoint(){
+    public void testUpdatePoint() throws SQLException {
 
-        try {
-            Point p = dao.getPoint(3L);
+
             Assert.assertTrue(dao.updatePoint(3L, points.get(3)));
             Assert.assertEquals(dao.getPoint(3L).getName(),points.get(3).getName());
             Assert.assertEquals(dao.getPoint(3L).getLongitude(),points.get(3).getLongitude());
-            dao.updatePoint(3L, p);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Test
-    public void testAddPoint(){
+    public void testAddPoint() throws SQLException {
         Point point = points.get(10);
-        try {
+
             Assert.assertTrue(dao.addPoint(point));
             Assert.assertEquals(dao.getPoint(point),point);
             dao.deletePoint(point);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
     @Test
-    public void testDeletePoint(){
+    public void testDeletePoint() throws SQLException {
 
-        try {
+
             Point point = dao.getPoint(3L);
             Assert.assertTrue(dao.deletePoint(point));
             Assert.assertNull(dao.getPoint(point));
-            dao.addPoint(point);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
 }
