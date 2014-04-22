@@ -24,7 +24,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.29</version>
             <type>jar</type>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
@@ -57,6 +56,15 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                    <warName>geo_maven</warName>
                 </configuration>
             </plugin>
         </plugins>
